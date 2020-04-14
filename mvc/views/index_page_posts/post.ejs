@@ -17,13 +17,12 @@
 
 <div class="blog-entry ftco-animate<%= horizontalClasses %><%= reverseDirection %>">
     <a
-      href="single.html"
+      href="/posts/<%= post.id %>"
       class="img<%= horizontalAClasses %><%= flippedAClass %>"
-      style="background-image: url(images/<%= post.image %>);"
-    ></a>
+      style="background-image: url(images/<%= post.image %>);"></a>
     <div class="text p-4<%= horizontalDivClasses %><%= flippedDivClass %>">
       <h3 class="mb-2">
-        <a href="single.html"
+        <a href="/posts/<%= post.id %>"
           ><%= post.title %></a
         >
       </h3>
@@ -32,20 +31,19 @@
           <span
             ><i class="icon-calendar mr-2"></i><%= post.date %>  </span>
           <span
-            ><a href="single.html"
+            ><a href="/posts/<%= post.id %>"
               ><i class="icon-folder-o mr-2"></i><%= post.category %></a
             ></span
           >
-          <span><i class="icon-comment2 mr-2"></i><%= post.comments %></span>
+          <span><i class="icon-comment2 mr-2"></i><%= post.numOfComments %> Comment</span>
         </p>
       </div>
       <p class="mb-4">
-        <%= post.body.substr(0,60) + "..." %>
+        <%= post.body.preview %>
       </p>
       <p>
-        <a href="#" class="btn-custom"
-          >Read More <span class="ion-ios-arrow-forward"></span
-        ></a>
+        <a href="/posts/<%= post.id %>" class="btn-custom"
+          >Read More <span class="ion-ios-arrow-forward"></span></a>
       </p>
     </div>
-  </div>
+</div>
