@@ -3,15 +3,25 @@ const postData = data.postData;
 const uniqueTags = data.uniqueTags;
 const categoryData = data.categoryData;
 
-const recentPostsAmount = 3;
+const recentPostsAmount = 6;
+
+const defaultData = {
+  categoryData: categoryData,
+};
+const rightSidebarData = {
+  uniqueTags: uniqueTags,
+  recentPosts: postData.slice(0, recentPostsAmount),
+}
 
 const getHomePage = (req, res) => {
-  res.render("index", {
-    title: "just Me",
+  let data = {
+    ...defaultData,
+    title: "Just Me",
     posts: postData,
     active: "index",
-    categoryData: categoryData,
-  });
+  };
+
+  res.render("index", data);
 };
 
 const getBlogPost = ({ params }, res) => {
@@ -19,22 +29,25 @@ const getBlogPost = ({ params }, res) => {
   if (!post) {
     res.redirect("/404");
   }
-  res.render("post", {
+
+  let data = {
+    ...defaultData,
+    ...rightSidebarData,
     title: post.title,
     post: post,
-    uniqueTags: uniqueTags,
-    recentPosts: postData.slice(0, recentPostsAmount),
-    categoryData: categoryData,
-  });
+  };
+
+  res.render("post", data);
 };
 
 const get404 = (req, res) => {
-  res.render("404", {
+  let data = {
+    ...defaultData,
+    ...rightSidebarData,
     title: "404 -I couldn't find that page...",
-    uniqueTags: uniqueTags,
-    recentPosts: postData.slice(0, recentPostsAmount),
-    categoryData: categoryData,
-  });
+  };
+
+  res.render("404", data);
 };
 
 const redirect404 = (req, res) => {
@@ -42,29 +55,37 @@ const redirect404 = (req, res) => {
 };
 
 const getAbout = (req, res) => {
-  res.render("about", {
+  let data = {
+    ...defaultData,
     title: "About Me",
     active: "about",
-    categoryData: categoryData,
-  });
+  };
+
+  res.render("about", data);
 };
 
 const getContact = (req, res) => {
-  res.render("contact", {
+  let data = {
+    ...defaultData,
     title: "Contact",
     active: "contact",
-    categoryData: categoryData,
-  });
+  };
+  res.render("contact", data);
 };
 
 const getFilteredList = ({ query }, res) => {
-  let filteredPosts = postData.filter((val) => val.category == query.category);
-  res.render("filter", {
+  let filteredPosts = postData.filter((val) => {
+    return val.category == query.category || val.tags.includes(query.tag);
+  });
+
+  let data = {
+    ...defaultData,
     title: "Just Me - Filtered",
     active: query.category,
     posts: filteredPosts,
-    categoryData: categoryData,
-  });
+  };
+
+  res.render("filter", data);
 };
 
 module.exports = {
