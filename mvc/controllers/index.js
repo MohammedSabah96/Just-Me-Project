@@ -2,7 +2,7 @@ const data = require("../../data");
 const postData = data.postData;
 
 const getHomePage = (req, res) => {
-  res.render("index", { title: "just Me", posts: postData });
+  res.render("index", { title: "just Me", posts: postData, active:"index" });
 };
 
 const getBlogPost = ({ params }, res) => {
@@ -21,9 +21,19 @@ const redirect404 = (req, res) => {
   res.redirect("/404");
 };
 
+const getAbout = (req, res) => {
+  res.render("about", {title:"About Me", active:"about"})
+}
+
+const getContact = (req, res) => {
+  res.render("contact", {title:"Contact", active:"contact"})
+}
+
 module.exports = {
   getHomePage,
   getBlogPost,
+  getAbout,
+  getContact,
   get404,
   redirect404,
 };
